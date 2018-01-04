@@ -1,0 +1,51 @@
+{
+  "name": "agile-tracker",
+  "version": "1.0.0",
+  "description": "A simple track tool for agile process.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/slientServer/agile-tracker.git"
+  },
+  "keywords": [
+    "agile",
+    "node",
+    "webpack",
+    "vue"
+  ],
+  "author": "Brian",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/slientServer/agile-tracker/issues"
+  },
+  "homepage": "https://github.com/slientServer/agile-tracker#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "config-lite": "^2.1.0",
+    "connect-mongo": "^2.0.0",
+    "del": "^3.0.0",
+    "eventproxy": "^1.0.0",
+    "express": "^4.16.2",
+    "express-session": "^1.15.6",
+    "formidable": "^1.1.1",
+    "fs": "0.0.1-security",
+    "gulp": "^3.9.1",
+    "gulp-clean-css": "^3.9.0",
+    "gulp-eslint": "^4.0.0",
+    "gulp-notify": "^3.0.0",
+    "gulp-plumber": "^1.1.0",
+    "gulp-rev": "^8.1.0",
+    "gulp-rev-collector": "^1.2.3",
+    "gulp-uglify": "^3.0.0",
+    "gulp-watch": "^4.3.11",
+    "log4js": "^2.3.12",
+    "md5": "^2.2.1",
+    "mongoose": "^4.13.6",
+    "nodemailer": "^4.4.1",
+    "path": "^0.12.7",
+    "pump": "^2.0.0"
+  }
+}
