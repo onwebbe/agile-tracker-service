@@ -1,6 +1,16 @@
 var createModel= require('./create-model');
 var mongoose = require('mongoose');
 
+//Users
+exports.Users= createModel('Users', 
+  { 
+    username: {type: 'String', required: true, unique: true},
+    password: String,
+    permission: Number, //1, 2, 3, 5, 8
+    role: String
+  }
+);
+
 //UserStorys
 exports.UserStorys= createModel('UserStorys', 
   { 
@@ -50,5 +60,19 @@ exports.StoryIssueAudit= createModel('StoryIssueAudit',
     databeforechange: String,
     dataafterchange: String,
     createdby: String
+  }
+);
+
+//SprintList
+exports.SprintList= createModel('SprintList', 
+  { 
+    key: {type: 'String', required: true, unique: true},
+    sprint: String,
+    release: String,
+    status: String,
+    start: String,
+    end: String,
+    createdby: String,
+    lastmodifiedby: String
   }
 );

@@ -28,11 +28,25 @@ module.exports= function(modleName){
         });
     },
 
-    findOne: function findOne(condition, handler, res, populateObj, selection){
+    findOne: function findOne(condition, handler, res, populateObj, selection, options){
+      if(!options){
+        var options= {
+          page: 1,
+          per_page: 1000,
+          sortby: 'lastMod',
+          order: '-1'
+        };
+      }
+      var sort= {};
+      if(options && options.sortby && options.order){
+        sort[options.sortby]= options.order;
+      }else{
+        sort['lastMod']= '-1';
+      }
       return model.findOne(condition)
         .select((selection || ''))
         .populate((populateObj?populateObj.path: ''), (populateObj?populateObj.select: ''))
-        .sort({'lastMod': '-1'})
+        .sort(sort)
         .then(function(resData){
           handler(resData);
         })
@@ -57,7 +71,11 @@ module.exports= function(modleName){
         };
       }
       var sort= {};
-      sort[options.sortby]= options.order;
+      if(options && options.sortby && options.order){
+        sort[options.sortby]= options.order;
+      }else{
+        sort['lastMod']= '-1';
+      }
       return model.find(condition)
         .select((selection|| ''))
         .populate((populateObj?populateObj.path: ''), (populateObj?populateObj.select: ''))

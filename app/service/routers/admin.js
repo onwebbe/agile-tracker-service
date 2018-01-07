@@ -4,14 +4,6 @@ var checkIsAdmin= require('../middlewares/permission-check').checkIsAdmin;
 var usersModel= require('../models/core')('Users');
 var logger= require('../libs/logger')();
 
-router.get('/', checkIsAdmin, function(req, res, next) {
-  res.render('./admin/index');
-});
-
-router.get('/login', function(req, res, next) {
-  res.render('./admin/login');
-});
-
 router.get('/logout', function(req, res, next) {
   req.session.user= '';
   res.redirect('/admin');
