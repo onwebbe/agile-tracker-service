@@ -20,16 +20,18 @@ var MongoStore= require('connect-mongo')(session);
 var routers= require('./app/service/routers/index');
 
 //设置静态目录
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'dist')));
 
 //设置session中间件
 app.use(session({
   name: config.session.key, //设置cookie中sessionId字段名称
   secret: config.session.secret,// 通过设置 secret 来计算 hash 值并放在 cookie 中，使产生的 signedCookie 防篡改
   resave: true,// 强制更新 session
-  saveUninitialized: true,// 设置为 false，强制创建一个 session，即使用户未登录
+  saveUninitialized: false,// 设置为 false，强制创建一个 session，即使用户未登录
+  rolling: config.session.rolling,
   cookie: {
-    maxAge: config.session.maxAge// 过期时间，过期后 cookie 中的 session id 自动删除
+    maxAge: config.session.maxAge,// 过期时间，过期后 cookie 中的 session id 自动删除
+    httpOnly: config.session.httpOnly
   },
   store: new MongoStore({// 将 session 存储到 mongodb
     url: config.mongodb// mongodb 地址
@@ -37,6 +39,10 @@ app.use(session({
 }));
 
 routers(app);
+
+process.on('uncaughtException', function (err) {
+  logger.error('Fatal error:', err);
+});
 
 app.listen(config.port, function(err) {
   if(err){

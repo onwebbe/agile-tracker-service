@@ -1,16 +1,12 @@
 var express= require('express');
 var router = express.Router();
-var oModel= require('../models/core')('Users');
+var fs= require('fs');
+var path= require('path');
+var logger= require('../libs/logger')();
 // page entry
 router.get('/', function(req, res, next) {
-  oModel.create({
-    'ad': 'test',
-    'pach': 'test'
-  }, function(){
-    res.send('create successfully');
-  }, res);
-
+  const html = fs.readFileSync(path.resolve(__dirname, '../../../dist/index/index.html'), 'utf-8');
+  res.send(html);
 });
 
 module.exports = router;
-

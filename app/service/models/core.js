@@ -16,13 +16,13 @@ module.exports= function(modleName){
             if(err.code== 11000){
               res.send({
                 status: 'error',
-                resMsg: '对不起，数据重复！'
+                resMsg: 'Sorry, duplicated data！'
               });
               return false;
             };
             res.send({
               status: 'error',
-              resMsg: '服务器内部错误, 请联系管理员！'
+              resMsg: 'Internal server error!'
             });
           }
         });
@@ -48,20 +48,20 @@ module.exports= function(modleName){
         .populate((populateObj?populateObj.path: ''), (populateObj?populateObj.select: ''))
         .sort(sort)
         .then(function(resData){
-          handler(resData);
+          handler(JSON.parse(JSON.stringify(resData)));
         })
         .catch(function(err){
           logger.error('Data query failed due to:[29]', err);          
           if(res && err){
             res.send({
               status: 'error',
-              resMsg: '服务器内部错误, 请联系管理员！'
+              resMsg: 'Internal server error!'
             });
           }
         })
     },
 
-    find: function find(condition, handler, res, populateObj, selection, options){
+    find: function find(condition, handler, res, populateObj, selection, options, params){
       if(!options){
         var options= {
           page: 1,
@@ -83,14 +83,30 @@ module.exports= function(modleName){
         .skip((options.page-1)*options.per_page)
         .limit(options.per_page)
         .then(function(resData){
-          handler(resData)
+          handler(JSON.parse(JSON.stringify(resData)), params);
         })
         .catch(function(err){
           logger.error('Data query failed due to:[45]', err);          
           if(res && err){
             res.send({
               status: 'error',
-              resMsg: '服务器内部错误, 请联系管理员！'
+              resMsg: 'Internal server error!'
+            });
+          }
+        })
+    },
+
+    aggregate: function aggregate(condition, handler, res){
+      return model.aggregate(condition)
+        .then(function(resData){
+          handler(resData);
+        })
+        .catch(function(err){
+          logger.error('Data query failed due to:[45]', err);          
+          if(res && err){
+            res.send({
+              status: 'error',
+              resMsg: 'Internal server error!'
             });
           }
         })
@@ -106,7 +122,7 @@ module.exports= function(modleName){
           if(res && err){
             res.send({
               status: 'error',
-              resMsg: '服务器内部错误, 请联系管理员！'
+              resMsg: 'Internal server error!'
             });
           }
         })
@@ -122,7 +138,7 @@ module.exports= function(modleName){
           if(res && err){
             res.send({
               status: 'error',
-              resMsg: '服务器内部错误, 请联系管理员！'
+              resMsg: 'Internal server error!'
             });
           }
         })
@@ -139,10 +155,23 @@ module.exports= function(modleName){
           if(res && err){
             res.send({
               status: 'error',
-              resMsg: '服务器内部错误, 请联系管理员！'
+              resMsg: 'Internal server error!'
             });
           }
         });
-    }
+    }/*,
+    isFieldExists: function isFieldExists (fieldName) {
+      return model.schema.obj[fieldName] != null;
+    },
+    createByFormData: function createByFormData (formData, handler, res) {
+      var dataToInsert = {};
+      for (field in formData) {
+        if (this.isFieldExists(field)) {
+          dataToInsert[field] = formData[field];
+        }
+      }
+      var t = this.create(dataToInsert, handler, res);
+      return t;
+    }*/
   };
 };
