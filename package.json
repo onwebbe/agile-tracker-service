@@ -43,7 +43,7 @@
     "gulp-rev-collector": "^1.2.3",
     "gulp-uglify": "^3.0.0",
     "gulp-watch": "^4.3.11",
-    "log4js": "^2.3.12",
+    "log4js": "^6.4.0",
     "md5": "^2.2.1",
     "mongoose": "^4.13.6",
     "path": "^0.12.7",
